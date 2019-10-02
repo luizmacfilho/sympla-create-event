@@ -44,6 +44,7 @@ export default class App extends Vue {}
 * {
   font-family: 'Open Sans';
 }
+
 .app {
   &__bar {
 

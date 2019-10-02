@@ -1,0 +1,87 @@
+@import './variables';
+
+.custom-input.v-input {
+  margin-top: 24px;
+  padding-top: 20px;
+
+  .v-input__control {
+
+    .v-input__slot {
+      border: 1px solid $steel;
+      border-radius: 3px;
+      margin-bottom: 4px;
+
+      &:before, &:after {
+        border: none;
+      }
+
+      label {
+        transform: none;
+        top: -20px;
+        height: 20px;
+        font-size: 14px;
+        font-weight: 600;
+        line-height: 1;
+        color: $input-label-color !important;
+        caret-color: $input-label-color !important;
+
+        &:after {
+          content: "*";
+          width: 8px;
+          margin: auto 4px;
+          line-height: 1;
+          height: 8px;
+          font-size: 12px;
+          color: $strawberry;
+        }
+      }
+
+      input {
+        height: 40px;
+        max-height: 40px;
+        padding: 9px 12px 10px;
+        font-size: 14px;
+        color: $quartz;
+      }
+    }
+
+    .v-messages__message {
+      color: $dark-gray;
+      line-height: 1;
+      font-size: 12px;
+    }
+  }
+
+  &.custom-prepend-icon {
+    label {
+      left: -49px !important;
+    }
+
+    .v-input__prepend-inner {
+      margin: 0;
+      width: 48px;
+      padding: 8px 12px;
+      border-right: 1px solid $steel;
+      height: 40px;
+    }
+  }
+
+  &.error--text {
+    .v-input__control {
+      .v-input__slot {
+        border-color: currentColor;
+      }
+
+      .v-messages__message {
+        color: $strawberry;
+        font-weight: 600;
+      }
+    }
+    &.custom-prepend-icon {
+
+      .v-input__prepend-inner {
+        border-color: $strawberry;
+      }
+    }
+  }
+}

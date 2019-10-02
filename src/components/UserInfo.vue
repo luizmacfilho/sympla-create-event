@@ -14,7 +14,7 @@
   display: flex;
 
   &__letters {
-    background-color: #a8a9af;
+    background-color: $dark-gray;
     border-radius: 50%;
     margin: auto 2px;
     height: 40px;
