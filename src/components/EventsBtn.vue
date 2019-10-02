@@ -4,7 +4,9 @@
     rounded
     outlined
     height="34"
-    color="primary">
+    color="primary"
+    to="/events"
+    >
     Meus eventos
   </v-btn>
 </template>

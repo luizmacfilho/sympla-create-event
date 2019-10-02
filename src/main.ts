@@ -4,8 +4,11 @@ import router from './router';
 import store from './store';
 import vuetify from './plugins/vuetify';
 import './registerServiceWorker';
+import AddEventBtn from '@/components/AddEventBtn.vue';
 
 Vue.config.productionTip = false;
+
+Vue.component('AddEventBtn', AddEventBtn);
 
 new Vue({
   router,

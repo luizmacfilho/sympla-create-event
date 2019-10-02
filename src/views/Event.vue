@@ -1,148 +1,156 @@
 <template>
-  <v-form>
-    <v-container class="event px-0 py-6">
-      <CardEvent
-        label="1. Qual é o nome do evento?"
-        description="Adicione também uma imagem de divulgação com as principais informações do evento!">
-        <div class="event__input">
-          <v-text-field
-            validate-on-blur
-            v-model="event.name"
-            class="custom-input"
-            maxlength="100"
-            label="Nome do evento"
-            :rules="rules.name"
-            >
-          </v-text-field>
-          <span class="event__input__hint">
-            {{ nameCharacterLeft }} caracteres restantes
-          </span>
-        </div>
-      </CardEvent>
+  <div class="event">
+    <PageBar>
+      <span class="page-bar__title">Criar evento</span>
+      <PublishEventBtn />
+    </PageBar>
 
-      <CardEvent
-        label="2. Quando o evento vai acontecer?"
-        description="Informe ao público a data de realização do seu evento.">
-        <v-row class="event__date">
-          <v-text-field
-            validate-on-blur
-            v-model="event.startDate"
-            class="custom-input custom-prepend-icon"
-            placeholder="DD/MM/AAAA"
-            v-mask="'##/##/####'"
-            prepend-inner-icon="$vuetify.icons.schedule"
-            label="Data de início"
-            :rules="rules.startDate"
-            >
-          </v-text-field>
-
-          <v-text-field
-            validate-on-blur
-            v-model="event.startTime"
-            class="custom-input custom-prepend-icon"
-            persistent-hint
-            hint="Horário de Brasília"
-            placeholder="11:00"
-            v-mask="'##:##'"
-            prepend-inner-icon="$vuetify.icons.clock"
-            label="Hora de início"
-            :rules="rules.startTime"
-            >
-          </v-text-field>
-
-          <v-spacer />
-
-          <v-text-field
-            validate-on-blur
-            v-model="event.endDate"
-            class="custom-input custom-prepend-icon"
-            placeholder="DD/MM/AAAA"
-            v-mask="'##/##/####'"
-            prepend-inner-icon="$vuetify.icons.schedule"
-            label="Data de término"
-            :rules="rules.endDate"
-            >
-          </v-text-field>
-
-          <v-text-field
-            validate-on-blur
-            v-model="event.endTime"
-            class="custom-input custom-prepend-icon"
-            persistent-hint
-            hint="Horário de Brasília"
-            placeholder="11:00"
-            v-mask="'##:##'"
-            prepend-inner-icon="$vuetify.icons.clock"
-            label="Hora de término"
-            :rules="rules.endTime"
-            >
-          </v-text-field>
-        </v-row>
-      </CardEvent>
-
-      <CardEvent
-        label="3. Ingressos"
-        height="226">
-        <v-row>
-          <v-col cols="6">
-            <div class="event__input">
-              <v-text-field
-                validate-on-blur
-                v-model="event.ticketName"
-                class="custom-input"
-                maxlength="45"
-                placeholder="Ex.: Ingresso único, Meia-Entrada, VIP, etc..."
-                label="Nome do ingresso"
-                :rules="rules.ticketName"
-                >
-              </v-text-field>
-              <span class="event__input__hint">
-                {{ ticketNameCharacterLeft }} caracteres restantes
-              </span>
-            </div>
-          </v-col>
-
-          <v-col cols="2">
+    <v-form>
+      <v-container class="event__container px-0 py-6">
+        <CardEvent
+          label="1. Qual é o nome do evento?"
+          description="Adicione também uma imagem de divulgação com as principais informações do evento!">
+          <div class="event__input">
             <v-text-field
               validate-on-blur
-              v-model="event.ticketAmount"
-              class="custom-input"
-              placeholder="Ex.: 100"
-              label="Quantidade"
-              type="number"
-              :rules="rules.ticketAmount"
-              >
-            </v-text-field>
-          </v-col>
-
-          <v-col cols="2">
-            <v-text-field
-              validate-on-blur
-              v-model="event.ticketPrice"
+              v-model="event.name"
               class="custom-input"
               maxlength="100"
-              placeholder="R$"
-              label="Preço do ingresso"
-              :rules="rules.ticketPrice"
+              label="Nome do evento"
+              :rules="rules.name"
               >
             </v-text-field>
-          </v-col>
+            <span class="event__input__hint">
+              {{ nameCharacterLeft }} caracteres restantes
+            </span>
+          </div>
+        </CardEvent>
 
-          <v-col cols="2" class="d-flex">
-            <v-checkbox
-              v-model="event.ticketFree"
-              class="custom-checkbox ma-auto pt-4"
-              hide-details
-              color="primary"
-              label="Ingresso gratuito"
-            ></v-checkbox>
-          </v-col>
-        </v-row>
-      </CardEvent>
+        <CardEvent
+          label="2. Quando o evento vai acontecer?"
+          description="Informe ao público a data de realização do seu evento.">
+          <v-row class="event__date">
+            <v-text-field
+              validate-on-blur
+              v-model="event.startDate"
+              class="custom-input custom-prepend-icon"
+              placeholder="DD/MM/AAAA"
+              v-mask="'##/##/####'"
+              prepend-inner-icon="$vuetify.icons.schedule"
+              label="Data de início"
+              :rules="rules.startDate"
+              >
+            </v-text-field>
 
-      <PublishEventBtn @click="$refs.form.validate()"/>
-    </v-container>
-  </v-form>
+            <v-text-field
+              validate-on-blur
+              v-model="event.startTime"
+              class="custom-input custom-prepend-icon"
+              persistent-hint
+              hint="Horário de Brasília"
+              placeholder="11:00"
+              v-mask="'##:##'"
+              prepend-inner-icon="$vuetify.icons.clock"
+              label="Hora de início"
+              :rules="rules.startTime"
+              >
+            </v-text-field>
+
+            <v-spacer />
+
+            <v-text-field
+              validate-on-blur
+              v-model="event.endDate"
+              class="custom-input custom-prepend-icon"
+              placeholder="DD/MM/AAAA"
+              v-mask="'##/##/####'"
+              prepend-inner-icon="$vuetify.icons.schedule"
+              label="Data de término"
+              :rules="rules.endDate"
+              >
+            </v-text-field>
+
+            <v-text-field
+              validate-on-blur
+              v-model="event.endTime"
+              class="custom-input custom-prepend-icon"
+              persistent-hint
+              hint="Horário de Brasília"
+              placeholder="11:00"
+              v-mask="'##:##'"
+              prepend-inner-icon="$vuetify.icons.clock"
+              label="Hora de término"
+              :rules="rules.endTime"
+              >
+            </v-text-field>
+          </v-row>
+        </CardEvent>
+
+        <CardEvent
+          label="3. Ingressos"
+          height="226">
+          <v-row>
+            <v-col cols="6">
+              <div class="event__input">
+                <v-text-field
+                  validate-on-blur
+                  v-model="event.ticketName"
+                  class="custom-input"
+                  maxlength="45"
+                  placeholder="Ex.: Ingresso único, Meia-Entrada, VIP, etc..."
+                  label="Nome do ingresso"
+                  :rules="rules.ticketName"
+                  >
+                </v-text-field>
+                <span class="event__input__hint">
+                  {{ ticketNameCharacterLeft }} caracteres restantes
+                </span>
+              </div>
+            </v-col>
+
+            <v-col cols="2">
+              <v-text-field
+                validate-on-blur
+                v-model="event.ticketAmount"
+                class="custom-input"
+                placeholder="Ex.: 100"
+                label="Quantidade"
+                type="number"
+                :rules="rules.ticketAmount"
+                >
+              </v-text-field>
+            </v-col>
+
+            <v-col cols="2">
+              <v-text-field
+                validate-on-blur
+                v-model="event.ticketPrice"
+                class="custom-input"
+                maxlength="100"
+                placeholder="R$"
+                label="Preço do ingresso"
+                :rules="rules.ticketPrice"
+                >
+              </v-text-field>
+            </v-col>
+
+            <v-col cols="2" class="d-flex">
+              <v-checkbox
+                v-model="event.ticketFree"
+                :ripple="false"
+                class="custom-checkbox ma-auto pt-4"
+                hide-details
+                color="primary"
+                label="Ingresso gratuito"
+              ></v-checkbox>
+            </v-col>
+          </v-row>
+        </CardEvent>
+
+        <PublishEventBtn @click="$refs.form.validate()"/>
+      </v-container>
+    </v-form>
+  </div>
 </template>
 
 <script lang="ts">
@@ -150,16 +158,17 @@ import Vue from 'vue';
 import { Component } from 'vue-property-decorator';
 import PublishEventBtn from '@/components/PublishEventBtn.vue';
 import CardEvent from '@/components/CardEvent.vue';
+import PageBar from '@/components/PageBar.vue';
 import moment from 'moment';
+import { instance } from '@/app/Application';
 
 @Component({
   components: {
-    PublishEventBtn, CardEvent,
+    PublishEventBtn, CardEvent, PageBar,
   },
 })
 export default class Event extends Vue {
 
-  public events: any[] = [];
   public requiredRule: any[] = [(value: string) => !!value || 'Campo obrigatório'];
   public rules: any = {
     name: this.requiredRule,
@@ -188,7 +197,9 @@ export default class Event extends Vue {
       },
     ]),
     ticketName: this.requiredRule,
-    ticketAmount: this.requiredRule,
+    ticketAmount: this.requiredRule.concat([
+      (value: number) => value > 0 || 'Quantidade inválida',
+    ]),
     ticketPrice: [],
   };
   public event = {
@@ -203,6 +214,11 @@ export default class Event extends Vue {
     ticketFree: false,
   };
 
+  constructor() {
+    super();
+    instance.headerButtonName = 'EventsBtn';
+  }
+
   get nameCharacterLeft() {
     return 100 - this.event.name.length;
   }
@@ -215,8 +231,11 @@ export default class Event extends Vue {
 
 <style lang="scss">
 .event {
-  max-width: 1110px;
-  text-align: right;
+
+  &__container {
+    max-width: 1110px;
+    text-align: right;
+  }
 
   &__input {
     position: relative;

@@ -22,6 +22,11 @@ export default new Router({
       component: () => import(/* webpackChunkName: "event" */ './views/Event.vue'),
     },
     {
+      path: '/add-event',
+      name: 'event',
+      component: () => import(/* webpackChunkName: "event" */ './views/Event.vue'),
+    },
+    {
       path: '*',
       name: 'notFound',
       component: () => import(/* webpackChunkName: "notFound" */ './views/NotFound.vue'),
