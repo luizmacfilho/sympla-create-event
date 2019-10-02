@@ -3,9 +3,7 @@
     <div class="user-info__letters">
       <span>TS</span>
     </div>
-    <v-icon class="user-info__dropdown">
-      mdi-play
-    </v-icon>
+    <v-icon class="user-info__dropdown">$vuetify.icons.arrowDown</v-icon>
   </div>
 </template>
 

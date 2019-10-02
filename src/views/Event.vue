@@ -15,40 +15,44 @@
       </CardEvent>
 
       <CardEvent
-        label="2. Quando o evento vai acontecer"
+        label="2. Quando o evento vai acontecer?"
         description="Informe ao público a data de realização do seu evento.">
         <v-row class="event__date">
           <v-text-field
-            class="custom-input"
+            class="custom-input custom-prepend-icon"
             placeholder="DD/MM/AAAA"
             v-mask="'##/##/####'"
+            prepend-inner-icon="$vuetify.icons.schedule"
             label="Data de início">
           </v-text-field>
 
           <v-text-field
-            class="custom-input"
+            class="custom-input custom-prepend-icon"
             persistent-hint
             hint="Horário de Brasília"
             placeholder="11:00"
             v-mask="'##:##'"
+            prepend-inner-icon="$vuetify.icons.clock"
             label="Hora de início">
           </v-text-field>
 
           <v-spacer />
 
           <v-text-field
-            class="custom-input"
+            class="custom-input custom-prepend-icon"
             placeholder="DD/MM/AAAA"
             v-mask="'##/##/####'"
+            prepend-inner-icon="$vuetify.icons.schedule"
             label="Data de término">
           </v-text-field>
 
           <v-text-field
-            class="custom-input"
+            class="custom-input custom-prepend-icon"
             persistent-hint
             hint="Horário de Brasília"
             placeholder="11:00"
             v-mask="'##:##'"
+            prepend-inner-icon="$vuetify.icons.clock"
             label="Hora de término">
           </v-text-field>
         </v-row>
@@ -188,12 +192,33 @@ export default class Event extends Vue {
       }
 
       input {
+        height: 40px;
         max-height: 40px;
         padding: 9px 12px 10px;
         font-size: 14px;
         color: #494b57;
       }
     }
+
+    .v-messages__message {
+      color: #a8a9af;
+      font-size: 12px;
+    }
+
+    &.custom-prepend-icon {
+      label {
+        left: -49px !important;
+      }
+
+      .v-input__prepend-inner {
+        margin: 0;
+        width: 48px;
+        padding: 8px 12px;
+        border-right: 1px solid gray;
+        height: 40px;
+      }
+    }
+
   }
 
   .custom-checkbox {
