@@ -70,6 +70,10 @@ export default class App extends Vue {
     top: 80px;
     right: 32px;
 
+    &__wrapper {
+      box-shadow: unset;
+    }
+
     &__content {
       background-color: #00cbc8;
     }

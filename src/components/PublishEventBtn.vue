@@ -15,7 +15,7 @@ button.publish-event-btn {
 
   &.v-btn.v-btn--rounded.theme--light.v-size--default {
     color: white;
-    background-color: #ff880e;
+    background-color: $dark-orange;
   }
 
   .v-btn__content {

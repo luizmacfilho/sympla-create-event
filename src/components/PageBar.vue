@@ -13,8 +13,9 @@
 
   &__content {
     width: 100%;
-    max-width: 1110px;
+    max-width: 1158px;
     margin: auto;
+    padding: 0 24px;
     height: 100px;
     background: white;
     display: flex;

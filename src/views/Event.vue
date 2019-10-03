@@ -6,8 +6,8 @@
     </PageBar>
 
     <v-form ref="form">
-      <v-container class="event__container px-0 py-6">
-        <CardEvent
+      <v-container class="event__container px-6 py-6">
+        <Card
           height="252"
           label="1. Qual é o nome do evento?"
           description="Adicione também uma imagem de divulgação com as principais informações do evento!">
@@ -25,74 +25,82 @@
               {{ nameCharacterLeft }} caracteres restantes
             </span>
           </div>
-        </CardEvent>
+        </Card>
 
-        <CardEvent
+        <Card
           height="252"
           label="2. Quando o evento vai acontecer?"
           description="Informe ao público a data de realização do seu evento.">
           <v-row class="event__date">
-            <v-text-field
-              validate-on-blur
-              v-model="event.startDate"
-              class="custom-input custom-prepend-icon"
-              placeholder="DD/MM/AAAA"
-              v-mask="'##/##/####'"
-              prepend-inner-icon="$vuetify.icons.schedule"
-              label="Data de início"
-              :rules="rules.startDate"
-              >
-            </v-text-field>
+            <v-col cols="12" sm="6" md="4">
+              <v-text-field
+                validate-on-blur
+                v-model="event.startDate"
+                class="custom-input custom-prepend-icon"
+                placeholder="DD/MM/AAAA"
+                v-mask="'##/##/####'"
+                prepend-inner-icon="$vuetify.icons.schedule"
+                label="Data de início"
+                :rules="rules.startDate"
+                >
+              </v-text-field>
+            </v-col>
 
-            <v-text-field
-              validate-on-blur
-              v-model="event.startTime"
-              class="custom-input custom-prepend-icon"
-              persistent-hint
-              hint="Horário de Brasília"
-              placeholder="11:00"
-              v-mask="'##:##'"
-              prepend-inner-icon="$vuetify.icons.clock"
-              label="Hora de início"
-              :rules="rules.startTime"
-              >
-            </v-text-field>
+            <v-col cols="12" sm="6" md="4">
+              <v-text-field
+                validate-on-blur
+                v-model="event.startTime"
+                class="custom-input custom-prepend-icon"
+                persistent-hint
+                hint="Horário de Brasília"
+                placeholder="11:00"
+                v-mask="'##:##'"
+                prepend-inner-icon="$vuetify.icons.clock"
+                label="Hora de início"
+                :rules="rules.startTime"
+                >
+              </v-text-field>
+            </v-col>
 
-            <v-spacer />
+            <v-spacer class="event__spacer" />
 
-            <v-text-field
-              validate-on-blur
-              v-model="event.endDate"
-              class="custom-input custom-prepend-icon"
-              placeholder="DD/MM/AAAA"
-              v-mask="'##/##/####'"
-              prepend-inner-icon="$vuetify.icons.schedule"
-              label="Data de término"
-              :rules="rules.endDate"
-              >
-            </v-text-field>
+            <v-col cols="12" sm="6" md="4">
+              <v-text-field
+                validate-on-blur
+                v-model="event.endDate"
+                class="custom-input custom-prepend-icon"
+                placeholder="DD/MM/AAAA"
+                v-mask="'##/##/####'"
+                prepend-inner-icon="$vuetify.icons.schedule"
+                label="Data de término"
+                :rules="rules.endDate"
+                >
+              </v-text-field>
+            </v-col>
 
-            <v-text-field
-              validate-on-blur
-              v-model="event.endTime"
-              class="custom-input custom-prepend-icon"
-              persistent-hint
-              hint="Horário de Brasília"
-              placeholder="11:00"
-              v-mask="'##:##'"
-              prepend-inner-icon="$vuetify.icons.clock"
-              label="Hora de término"
-              :rules="rules.endTime"
-              >
-            </v-text-field>
+            <v-col cols="12" sm="6" md="4">
+              <v-text-field
+                validate-on-blur
+                v-model="event.endTime"
+                class="custom-input custom-prepend-icon"
+                persistent-hint
+                hint="Horário de Brasília"
+                placeholder="11:00"
+                v-mask="'##:##'"
+                prepend-inner-icon="$vuetify.icons.clock"
+                label="Hora de término"
+                :rules="rules.endTime"
+                >
+              </v-text-field>
+            </v-col>
           </v-row>
-        </CardEvent>
+        </Card>
 
-        <CardEvent
+        <Card
           label="3. Ingressos"
           height="226">
           <v-row>
-            <v-col cols="6">
+            <v-col class="py-0" cols="12" sm="9" md="6">
               <div class="event__input">
                 <v-text-field
                   validate-on-blur
@@ -110,7 +118,7 @@
               </div>
             </v-col>
 
-            <v-col cols="2">
+            <v-col class="py-0" cols="12" sm="3" md="2">
               <v-text-field
                 validate-on-blur
                 v-model="event.ticketAmount"
@@ -123,7 +131,7 @@
               </v-text-field>
             </v-col>
 
-            <v-col cols="2">
+            <v-col class="py-0" cols="12" sm="4" md="2">
               <v-text-field
                 validate-on-blur
                 v-model="event.ticketPrice"
@@ -136,18 +144,18 @@
               </v-text-field>
             </v-col>
 
-            <v-col cols="2" class="d-flex">
+            <v-col class="py-0 d-flex" cols="12" sm="6" md="2">
               <v-checkbox
                 v-model="event.ticketFree"
                 :ripple="false"
-                class="custom-checkbox ma-auto pt-4"
+                class="custom-checkbox my-auto pt-4"
                 hide-details
                 color="primary"
                 label="Ingresso gratuito"
               ></v-checkbox>
             </v-col>
           </v-row>
-        </CardEvent>
+        </Card>
 
         <PublishEventBtn @click="publishEvent($refs.form)"/>
       </v-container>
@@ -159,7 +167,7 @@
 import Vue from 'vue';
 import moment from 'moment';
 import PageBar from '@/components/PageBar.vue';
-import CardEvent from '@/components/CardEvent.vue';
+import Card from '@/components/Card.vue';
 import EventStorageInstance, { IEvent } from '@/storage/EventStorage';
 import PublishEventBtn from '@/components/PublishEventBtn.vue';
 import { Component } from 'vue-property-decorator';
@@ -167,7 +175,7 @@ import instance from '@/app/Application';
 
 @Component({
   components: {
-    PublishEventBtn, CardEvent, PageBar,
+    PublishEventBtn, Card, PageBar,
   },
 })
 export default class Event extends Vue {
@@ -216,6 +224,7 @@ export default class Event extends Vue {
     ticketAmount: '',
     ticketPrice: '',
     ticketFree: false,
+    ticketSold: 0,
   };
 
   public created() {
@@ -223,8 +232,10 @@ export default class Event extends Vue {
     instance.headerButtonName = 'EventsBtn';
     if (id) {
       try {
-        const event = EventStorageInstance.getEventById(+id);
-        this.event = Object.assign({}, this.event, event);
+        const event: any = EventStorageInstance.getEventById(+id);
+        Object.keys(event).forEach((key) => {
+          (this.event as any)[key] = event[key];
+        });
       } catch (e) {
         this.$router.replace('/not-found');
       }
@@ -255,7 +266,7 @@ export default class Event extends Vue {
 .event {
 
   &__container {
-    max-width: 1110px;
+    max-width: 1158px;
     text-align: right;
   }
 
@@ -277,9 +288,10 @@ export default class Event extends Vue {
     margin-left: 0;
     margin-right: 0;
 
-    > div.custom-input {
+    > div {
       margin-right: 24px;
       max-width: 189px;
+      padding: 0;
 
       &:last-child {
         margin-right: 0;
@@ -291,6 +303,25 @@ export default class Event extends Vue {
     label {
       font-size: 14px;
       color: $input-label-color;
+    }
+  }
+}
+
+@media screen and (max-width: 1024px) {
+  .event {
+    &__spacer {
+      display: none;
+    }
+
+    &__date {
+      margin-left: -12px;
+      margin-right: -12px;
+
+      > div {
+        padding: 0 12px;
+        max-width: unset;
+        margin-right: 0;
+      }
     }
   }
 }

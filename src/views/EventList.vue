@@ -14,8 +14,8 @@
       <AddEventBtn label="Criar novo evento" color="#ff880e" />
     </div>
 
-    <div v-else class="event-list__events">
-      <CardEvent>
+    <v-container v-else class="event-list__events">
+      <Card>
         <span class="event-list__events__title">lista de eventos</span>
 
         <table class="event-list__events__table">
@@ -37,11 +37,11 @@
             <tr v-for="(event, index) in events" :key="index" @click="editEvent(event.id)">
               <td>{{event.name}}</td>
               <td>{{event.startDate}}</td>
-              <td>{{event.name}}</td>
+              <td>{{event.location}}</td>
               <td class="event-list__events__table__value-amount">
                 <div class="value-amount">
-                  <span>0</span>
-                  <div class="value-amount__sold"></div>
+                  <span>{{event.ticketSold}}</span>
+                  <div class="value-amount__sold" :style="`width: ${getSoldWidth(event)}px;`"></div>
                   <div class="value-amount__original"></div>
                   <span>{{event.ticketAmount}}</span>
                 </div>
@@ -49,8 +49,8 @@
             </tr>
           </tbody>
         </table>
-      </CardEvent>
-    </div>
+      </Card>
+    </v-container>
   </div>
 </template>
 
@@ -58,12 +58,12 @@
 import { Component, Vue } from 'vue-property-decorator';
 import instance from '@/app/Application';
 import PageBar from '@/components/PageBar.vue';
-import CardEvent from '@/components/CardEvent.vue';
-import EventStorageInstance from '@/storage/EventStorage';
+import Card from '@/components/Card.vue';
+import EventStorageInstance, { IEvent } from '@/storage/EventStorage';
 
 @Component({
   components: {
-    PageBar, CardEvent,
+    PageBar, Card,
   },
 })
 export default class EventList extends Vue {
@@ -78,6 +78,10 @@ export default class EventList extends Vue {
 
   public editEvent(id: number) {
     this.$router.push(`/events/${id}`);
+  }
+
+  public getSoldWidth(event: IEvent) {
+    return Math.round(event.ticketSold * 204 / +event.ticketAmount);
   }
 }
 </script>
@@ -101,7 +105,8 @@ export default class EventList extends Vue {
   }
 
   &__events {
-    padding: 24px 0;
+    padding: 24px;
+    max-width: 1158px;
 
     &__title {
       font-size: 14px;
