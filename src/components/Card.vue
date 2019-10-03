@@ -2,7 +2,7 @@
   <v-card
     class="event-card ma-auto mb-6"
     max-width="1142"
-    :min-height="height"
+    :min-height="minHeight"
   >
     <span v-if="label" class="event-card__title">{{ label }}</span>
     <span v-if="description" class="event-card__description">{{ description }}</span>
@@ -19,7 +19,7 @@ export default class Card extends Vue {
 
   @Prop({ type: String, default: '' }) public label!: string;
   @Prop({ type: String, default: '' }) public description!: string;
-  @Prop({ type: [Number, String] }) public height!: number|string;
+  @Prop({ type: [Number, String] }) public minHeight!: number|string;
 }
 </script>
 
@@ -41,6 +41,12 @@ export default class Card extends Vue {
     line-height: 1.5;
     color: #494b57;
     padding-left: 24px;
+  }
+}
+
+@media screen and (max-width: 700px) {
+  .event-card {
+    padding: 24px;
   }
 }
 </style>

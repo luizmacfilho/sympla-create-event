@@ -49,6 +49,28 @@
             </tr>
           </tbody>
         </table>
+        <div class="event-list__mobile">
+          <div class="event-list__mobile__row" v-for="(event, index) in events" :key="index" @click="editEvent(event.id)">
+            <div class="event-list__mobile__row__group">
+              <span class="event-list__mobile__row__title">Nome</span>
+              <span class="event-list__mobile__row__value">{{event.name}}</span>
+            </div>
+            <div class="event-list__mobile__row__group">
+              <span class="event-list__mobile__row__title">Quando</span>
+              <span class="event-list__mobile__row__value">{{event.startDate}}</span>
+            </div>
+            <div class="event-list__mobile__row__group">
+              <span class="event-list__mobile__row__title">Onde</span>
+              <span class="event-list__mobile__row__value">{{event.location}}</span>
+            </div>
+            <div class="event-list__mobile__row__group">
+              <span class="event-list__mobile__row__title">Ingressos</span>
+              <span class="event-list__mobile__row__value">
+                {{ event.ticketSold }} de {{ event.ticketAmount }}
+              </span>
+            </div>
+          </div>
+        </div>
       </Card>
     </v-container>
   </div>
@@ -68,7 +90,10 @@ import EventStorageInstance, { IEvent } from '@/storage/EventStorage';
 })
 export default class EventList extends Vue {
 
-  public events: any[] = [];
+  /**
+   * Created events
+   */
+  public events: IEvent[] = [];
 
   constructor() {
     super();
@@ -76,10 +101,16 @@ export default class EventList extends Vue {
     this.events = EventStorageInstance.events;
   }
 
+  /**
+   * Go to edit event page
+   */
   public editEvent(id: number) {
     this.$router.push(`/events/${id}`);
   }
 
+  /**
+   * Retrieves progress bar width
+   */
   public getSoldWidth(event: IEvent) {
     return Math.round(event.ticketSold * 204 / +event.ticketAmount);
   }
@@ -126,10 +157,7 @@ export default class EventList extends Vue {
         background-color: rgba(214, 216, 219, 0.1);
 
         th {
-          font-size: 12px;
-          font-weight: bold;
-          color: $quartz;
-          text-transform: uppercase;
+          @extend .column-title;
           height: 36px;
         }
 
@@ -152,49 +180,98 @@ export default class EventList extends Vue {
       &__value-amount {
         width: 360px;
       }
+    }
+  }
 
-      &__value-amount {
+  &__mobile {
+    font-size: 12px;
+    display: none;
 
-        .value-amount {
-          display: flex;
-          width: 204px;
-          height: 24px;
-          position: relative;
-          justify-content: space-between;
-          align-items: center;
-          padding: 0 5px;
+    &__row {
+      border-bottom: solid 1px rgba(214, 216, 219, 0.5);
+      margin-bottom: 12px;
+      padding-bottom: 12px;
+      cursor: pointer;
 
-          span {
-            z-index: 5;
-          }
+      &:last-child {
+        margin-bottom: 0;
+      }
 
-          &__sold {
-            @extend .absolute-full-space;
-            width: 50px;
-            background: #2ac8bc;
-            border-radius: 6px 0 0 6px;
-            z-index: 3;
-          }
+      &__group {
+        min-height: 24px;
+        display: flex;
+        align-items: center;
+      }
 
-          &__original {
-            @extend .absolute-full-space;
-            width: 100%;
-            background: #d6d8db;
-            border-radius: 6px;
-            z-index: 1;
-            opacity: 0.3;
-          }
-        }
+      &__title {
+        min-width: 100px;
+        @extend .column-title;
+      }
+
+      &__value {
+        width: 100%;
+        padding-left: 14px;
       }
     }
   }
 }
 
+.value-amount {
+  display: flex;
+  width: 100%;
+  max-width: 204px;
+  height: 24px;
+  position: relative;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 5px;
+
+  span {
+    z-index: 5;
+  }
+
+  &__sold {
+    @extend .absolute-full-space;
+    background: #2ac8bc;
+    border-radius: 6px 0 0 6px;
+    z-index: 3;
+  }
+
+  &__original {
+    @extend .absolute-full-space;
+    width: 100%;
+    background: #d6d8db;
+    border-radius: 6px;
+    z-index: 1;
+    opacity: 0.3;
+  }
+}
 .absolute-full-space {
   position: absolute;
   left: 0;
   top: 0;
   right: 0;
   bottom: 0;
+}
+
+.column-title {
+  font-size: 12px;
+  font-weight: bold;
+  color: $quartz;
+  text-transform: uppercase;
+}
+
+@media screen and (max-width: 700px) {
+  .event-list {
+    &__events {
+      &__table {
+        display: none;
+      }
+    }
+
+    &__mobile {
+      display: block;
+    }
+  }
 }
 </style>

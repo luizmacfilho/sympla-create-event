@@ -5,6 +5,7 @@ import store from './store';
 import vuetify from './plugins/vuetify';
 import AddEventBtn from '@/components/AddEventBtn.vue';
 import EventsBtn from '@/components/EventsBtn.vue';
+import './registerServiceWorker';
 
 Vue.config.productionTip = false;
 

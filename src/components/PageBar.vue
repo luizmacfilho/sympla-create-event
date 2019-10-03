@@ -24,7 +24,6 @@
   }
 
   &__title {
-    height: 30px;
     line-height: 1.25;
     font-size: 24px;
     color: #494b57;

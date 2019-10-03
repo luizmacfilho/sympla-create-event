@@ -8,7 +8,7 @@
     <v-form ref="form">
       <v-container class="event__container px-6 py-6">
         <Card
-          height="252"
+          minHeight="252"
           label="1. Qual é o nome do evento?"
           description="Adicione também uma imagem de divulgação com as principais informações do evento!">
           <div class="event__input">
@@ -16,8 +16,8 @@
               validate-on-blur
               v-model="event.name"
               class="custom-input"
-              maxlength="100"
               label="Nome do evento"
+              :maxlength="nameMaxLength"
               :rules="rules.name"
               >
             </v-text-field>
@@ -28,7 +28,7 @@
         </Card>
 
         <Card
-          height="252"
+          minHeight="252"
           label="2. Quando o evento vai acontecer?"
           description="Informe ao público a data de realização do seu evento.">
           <v-row class="event__date">
@@ -98,7 +98,7 @@
 
         <Card
           label="3. Ingressos"
-          height="226">
+          minHeight="226">
           <v-row>
             <v-col class="py-0" cols="12" sm="9" md="6">
               <div class="event__input">
@@ -106,7 +106,7 @@
                   validate-on-blur
                   v-model="event.ticketName"
                   class="custom-input"
-                  maxlength="45"
+                  :maxlength="ticketNameMaxLength"
                   placeholder="Ex.: Ingresso único, Meia-Entrada, VIP, etc..."
                   label="Nome do ingresso"
                   :rules="rules.ticketName"
@@ -164,6 +164,8 @@
 </template>
 
 <script lang="ts">
+type IRule = (value: any) => boolean|string;
+
 import Vue from 'vue';
 import moment from 'moment';
 import PageBar from '@/components/PageBar.vue';
@@ -180,8 +182,15 @@ import instance from '@/app/Application';
 })
 export default class Event extends Vue {
 
-  public requiredRule: any[] = [(value: string) => !!value || 'Campo obrigatório'];
-  public rules: any = {
+  /**
+   * Generic required rule, that validates empty string and null or undefined
+   */
+  public requiredRule: IRule[] = [(value: string) => !!value || typeof value === 'number' || 'Campo obrigatório'];
+
+  /**
+   * Inputs rules
+   */
+  public rules: { [key: string]: IRule[] } = {
     name: this.requiredRule,
     startDate: this.requiredRule.concat([
       (value: string) => moment(value, 'DD/MM/YYYY', true).isValid() || 'Data inválida',
@@ -213,6 +222,10 @@ export default class Event extends Vue {
     ]),
     ticketPrice: [(value: string) => this.event.ticketFree || !!value || 'Campo obrigatório'],
   };
+
+  /**
+   * Form value
+   */
   public event: IEvent = {
     id: 0,
     name: '',
@@ -227,37 +240,65 @@ export default class Event extends Vue {
     ticketSold: 0,
   };
 
+  /**
+   * Event name input max length value
+   */
+  public nameMaxLength: number = 100;
+
+  /**
+   * Ticket name input max length value
+   */
+  public ticketNameMaxLength: number = 45;
+
   public created() {
     const id = this.$router.currentRoute.params.id;
-    instance.headerButtonName = 'EventsBtn';
     if (id) {
       try {
-        const event: any = EventStorageInstance.getEventById(+id);
-        Object.keys(event).forEach((key) => {
-          (this.event as any)[key] = event[key];
-        });
+        this.setEvent(+id);
       } catch (e) {
         this.$router.replace('/not-found');
       }
     }
+    instance.headerButtonName = 'EventsBtn';
   }
 
+  /**
+   * Remaining event name input chacacteres
+   */
   get nameCharacterLeft() {
-    return 100 - this.event.name.length;
+    return this.nameMaxLength - this.event.name.length;
   }
 
+  /**
+   * Remaining ticket name input chacacteres
+   */
   get ticketNameCharacterLeft() {
-    return 45 - this.event.ticketName.length;
+    return this.ticketNameMaxLength - this.event.ticketName.length;
   }
 
-  public publishEvent(form: any) {
+  /**
+   * Saves the new or edited event
+   */
+  public publishEvent(form: { validate: () => boolean }) {
     if (form.validate()) {
-      const text = this.event.id ? 'editado' : 'criado';
+      if (this.event.ticketFree) {
+        this.event.ticketPrice = '';
+      }
       EventStorageInstance.save(this.event);
-      this.$router.push('/events');
-      instance.toastMessage = `Evento ${text} com sucesso`;
+      instance.toastMessage = `Evento ${this.event.id ? 'editado' : 'criado'} com sucesso`;
       instance.showToast = true;
+      this.$router.push('/events');
     }
+  }
+
+  /**
+   * Sets event property with event to edit
+   */
+  private setEvent(id: number) {
+    const event: any = EventStorageInstance.getEventById(+id);
+    Object.keys(event).forEach((key) => {
+      (this.event as any)[key] = event[key];
+    });
   }
 }
 </script>

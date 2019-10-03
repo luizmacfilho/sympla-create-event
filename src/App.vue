@@ -79,4 +79,10 @@ export default class App extends Vue {
     }
   }
 }
+
+@media screen and (max-width: 500px) {
+  .app__bar__logo {
+    display: none;
+  }
+}
 </style>
