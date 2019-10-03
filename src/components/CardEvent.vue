@@ -4,7 +4,7 @@
     max-width="1110"
     :height="height"
   >
-    <span class="event-card__title">{{ label }}</span>
+    <span v-if="label" class="event-card__title">{{ label }}</span>
     <span v-if="description" class="event-card__description">{{ description }}</span>
     <slot></slot>
   </v-card>
@@ -17,9 +17,9 @@ import { Component, Prop } from 'vue-property-decorator';
 @Component
 export default class CardEvent extends Vue {
 
-  @Prop({ type: String, required: true }) public label!: string;
+  @Prop({ type: String, default: '' }) public label!: string;
   @Prop({ type: String, default: '' }) public description!: string;
-  @Prop({ type: [Number, String], default: 252 }) public height!: number|string;
+  @Prop({ type: [Number, String] }) public height!: number|string;
 }
 </script>
 

@@ -18,12 +18,12 @@ export default new Router({
     },
     {
       path: '/events/:id',
-      name: 'event',
+      name: 'edit-event',
       component: () => import(/* webpackChunkName: "event" */ './views/Event.vue'),
     },
     {
       path: '/add-event',
-      name: 'event',
+      name: 'add-event',
       component: () => import(/* webpackChunkName: "event" */ './views/Event.vue'),
     },
     {

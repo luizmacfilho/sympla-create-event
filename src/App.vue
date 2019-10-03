@@ -9,11 +9,18 @@
     >
       <component :is="app.headerButtonName"></component>
       <img class="app__bar__logo" src="./assets/logo.svg"/>
-      <UserInfo />
+      <UserInfo class="app__bar__user" />
     </v-app-bar>
     <v-content>
       <router-view/>
     </v-content>
+
+    <v-snackbar v-model="app.showToast" top right color="primary">
+      {{ app.toastMessage }}
+      <v-btn color="white" text icon @click="app.showToast = false">
+        <v-icon>mdi-close</v-icon>
+      </v-btn>
+    </v-snackbar>
   </v-app>
 </template>
 
@@ -24,6 +31,7 @@ import EventsBtn from '@/components/EventsBtn.vue';
 import UserInfo from '@/components/UserInfo.vue';
 import PublishEventBtn from '@/components/PublishEventBtn.vue';
 import { instance, Application } from '@/app/Application';
+import EventStorage from '@/storage/EventStorage';
 
 @Component({
   components: {
@@ -37,6 +45,7 @@ export default class App extends Vue {
   constructor() {
     super();
     this.app = instance;
+    EventStorage.start();
   }
 }
 </script>
@@ -49,8 +58,6 @@ export default class App extends Vue {
   &__bar {
 
     .v-toolbar__content {
-      display: flex;
-      justify-content: space-between;
       border-bottom: 1px solid #ccc;
     }
 
@@ -59,6 +66,19 @@ export default class App extends Vue {
       position: absolute;
       left: 50%;
       transform: translateX(-50%);
+    }
+
+    &__user {
+      margin-left: auto;
+    }
+  }
+
+  .v-snack {
+    top: 80px;
+    right: 32px;
+
+    &__content {
+      background-color: #00cbc8;
     }
   }
 }

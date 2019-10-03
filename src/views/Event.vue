@@ -2,12 +2,13 @@
   <div class="event">
     <PageBar>
       <span class="page-bar__title">Criar evento</span>
-      <PublishEventBtn />
+      <PublishEventBtn @click="publishEvent($refs.form)"/>
     </PageBar>
 
-    <v-form>
+    <v-form ref="form">
       <v-container class="event__container px-0 py-6">
         <CardEvent
+          height="252"
           label="1. Qual é o nome do evento?"
           description="Adicione também uma imagem de divulgação com as principais informações do evento!">
           <div class="event__input">
@@ -27,6 +28,7 @@
         </CardEvent>
 
         <CardEvent
+          height="252"
           label="2. Quando o evento vai acontecer?"
           description="Informe ao público a data de realização do seu evento.">
           <v-row class="event__date">
@@ -147,7 +149,7 @@
           </v-row>
         </CardEvent>
 
-        <PublishEventBtn @click="$refs.form.validate()"/>
+        <PublishEventBtn @click="publishEvent($refs.form)"/>
       </v-container>
     </v-form>
   </div>
@@ -155,11 +157,12 @@
 
 <script lang="ts">
 import Vue from 'vue';
-import { Component } from 'vue-property-decorator';
-import PublishEventBtn from '@/components/PublishEventBtn.vue';
-import CardEvent from '@/components/CardEvent.vue';
-import PageBar from '@/components/PageBar.vue';
 import moment from 'moment';
+import PageBar from '@/components/PageBar.vue';
+import CardEvent from '@/components/CardEvent.vue';
+import EventStorageInstance from '@/storage/EventStorage';
+import PublishEventBtn from '@/components/PublishEventBtn.vue';
+import { Component } from 'vue-property-decorator';
 import { instance } from '@/app/Application';
 
 @Component({
@@ -200,9 +203,9 @@ export default class Event extends Vue {
     ticketAmount: this.requiredRule.concat([
       (value: number) => value > 0 || 'Quantidade inválida',
     ]),
-    ticketPrice: [],
+    ticketPrice: [(value: string) => this.event.ticketFree || !!value || 'Campo obrigatório'],
   };
-  public event = {
+  public event: any = {
     name: '',
     startDate: '',
     startTime: '',
@@ -214,9 +217,15 @@ export default class Event extends Vue {
     ticketFree: false,
   };
 
-  constructor() {
-    super();
+  public created() {
+    const id = this.$router.currentRoute.params.id;
     instance.headerButtonName = 'EventsBtn';
+    if (id) {
+      const event = EventStorageInstance.getEventById(+id);
+      for (const key in event) {
+        this.event[key] = event[key];
+      }
+    }
   }
 
   get nameCharacterLeft() {
@@ -225,6 +234,16 @@ export default class Event extends Vue {
 
   get ticketNameCharacterLeft() {
     return 45 - this.event.ticketName.length;
+  }
+
+  public publishEvent(form: any) {
+    if (form.validate()) {
+      EventStorageInstance.save(this.event, !this.event.id);
+      const text = this.event.id ? 'editado' : 'criado';
+      this.$router.push('/events');
+      instance.toastMessage = `Evento ${text} com sucesso`;
+      instance.showToast = true;
+    }
   }
 }
 </script>

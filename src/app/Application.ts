@@ -1,15 +1,10 @@
 /**
- * Application options interface
- */
-export interface IApplication {
-  headerButtonName: string;
-}
-
-/**
  * Class to control application options
  */
-export class Application implements IApplication {
-  public headerButtonName: string = 'AddEventBtn';
+export class Application {
+  public headerButtonName: string = '';
+  public showToast: boolean = false;
+  public toastMessage: string = '';
 }
 
 /**

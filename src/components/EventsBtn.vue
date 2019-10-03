@@ -3,6 +3,7 @@
     class="events-btn"
     rounded
     outlined
+    exact
     height="34"
     color="primary"
     to="/events"

@@ -1,15 +1,13 @@
-export default class EventStorage {
+export class EventStorage {
 
-  public static start() {
+  public events: any[] = [];
+
+  public start() {
     const events = localStorage.getItem('events');
     this.events = JSON.parse(events || '[]');
   }
 
-  public static get() {
-    return this.events;
-  }
-
-  public static save(event: any, newEvent: boolean = false) {
+  public save(event: any, newEvent: boolean = false) {
     if (newEvent) {
       this.saveNewEvent(event);
     } else {
@@ -18,18 +16,21 @@ export default class EventStorage {
     localStorage.setItem('events', JSON.stringify(this.events));
   }
 
-  private static events: any[] = [];
+  public getEventById(id: number) {
+    return this.events[this.getEventIndexById(id)];
+  }
 
-  private static saveEditedEvent(event: any) {
+  private saveEditedEvent(event: any) {
     const index = this.getEventIndexById(event.id);
     this.events[index] = event;
   }
 
-  private static saveNewEvent(event: any) {
+  private saveNewEvent(event: any) {
+    event.id = Date.now();
     this.events.push(event);
   }
 
-  private static getEventIndexById(id: any) {
+  private getEventIndexById(id: any) {
     const index = this.events.findIndex((e) => e.id === id);
     if (index !== -1) {
       return index;
@@ -37,3 +38,10 @@ export default class EventStorage {
     throw new Error('Event not found');
   }
 }
+
+/**
+ * Singleton instance of EventStorage class
+ */
+const EventStorageInstance: EventStorage = new EventStorage();
+
+export default EventStorageInstance;

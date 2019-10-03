@@ -3,7 +3,9 @@
     class="publish-event-btn"
     rounded
     elevation="0"
-    height="34">
+    height="34"
+    @click="$emit('click', $event)"
+    >
     Publicar evento
   </v-btn>
 </template>
