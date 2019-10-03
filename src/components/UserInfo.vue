@@ -9,6 +9,7 @@
 
 <style lang="scss" scoped>
 .user-info {
+  cursor: pointer;
   height: 44px;
   width: 73px;
   display: flex;

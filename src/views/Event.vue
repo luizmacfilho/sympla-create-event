@@ -160,10 +160,10 @@ import Vue from 'vue';
 import moment from 'moment';
 import PageBar from '@/components/PageBar.vue';
 import CardEvent from '@/components/CardEvent.vue';
-import EventStorageInstance from '@/storage/EventStorage';
+import EventStorageInstance, { IEvent } from '@/storage/EventStorage';
 import PublishEventBtn from '@/components/PublishEventBtn.vue';
 import { Component } from 'vue-property-decorator';
-import { instance } from '@/app/Application';
+import instance from '@/app/Application';
 
 @Component({
   components: {
@@ -186,7 +186,7 @@ export default class Event extends Vue {
       (value: string) => moment(value, 'DD/MM/YYYY', true).isValid() || 'Data inválida',
       (value: string) => {
         const startDate = moment(this.event.startDate, 'DD/MM/YYYY');
-        const isValid = moment(value, 'DD/MM/YYYY').isSameOrAfter(startDate)
+        const isValid = moment(value, 'DD/MM/YYYY').isSameOrAfter(startDate);
         return !this.event.startDate || isValid || 'Insira uma data posterior a de início do evento';
       },
     ]),
@@ -194,7 +194,7 @@ export default class Event extends Vue {
       (value: string) => moment(value, 'HH:mm', true).isValid() || 'Hora inválida',
       (value: string) => {
         const startTime = moment(this.event.startTime, 'HH:mm');
-        const isValid = moment(value, 'HH:mm').isSameOrAfter(startTime)
+        const isValid = moment(value, 'HH:mm').isSameOrAfter(startTime);
         return this.event.startDate !== this.event.endDate
           || !this.event.startTime || isValid || 'Insira uma hora posterior a de início do evento';
       },
@@ -205,15 +205,16 @@ export default class Event extends Vue {
     ]),
     ticketPrice: [(value: string) => this.event.ticketFree || !!value || 'Campo obrigatório'],
   };
-  public event: any = {
+  public event: IEvent = {
+    id: 0,
     name: '',
     startDate: '',
     startTime: '',
     endDate: '',
     endTime: '',
     ticketName: '',
-    ticketAmount: undefined,
-    ticketPrice: undefined,
+    ticketAmount: '',
+    ticketPrice: '',
     ticketFree: false,
   };
 
@@ -221,9 +222,11 @@ export default class Event extends Vue {
     const id = this.$router.currentRoute.params.id;
     instance.headerButtonName = 'EventsBtn';
     if (id) {
-      const event = EventStorageInstance.getEventById(+id);
-      for (const key in event) {
-        this.event[key] = event[key];
+      try {
+        const event = EventStorageInstance.getEventById(+id);
+        this.event = Object.assign({}, this.event, event);
+      } catch (e) {
+        this.$router.replace('/not-found');
       }
     }
   }
@@ -238,8 +241,8 @@ export default class Event extends Vue {
 
   public publishEvent(form: any) {
     if (form.validate()) {
-      EventStorageInstance.save(this.event, !this.event.id);
       const text = this.event.id ? 'editado' : 'criado';
+      EventStorageInstance.save(this.event);
       this.$router.push('/events');
       instance.toastMessage = `Evento ${text} com sucesso`;
       instance.showToast = true;

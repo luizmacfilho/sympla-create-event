@@ -10,4 +10,6 @@ export class Application {
 /**
  * Singleton instance of Application class
  */
-export const instance: Application = new Application();
+const instance: Application = new Application();
+
+export default instance;

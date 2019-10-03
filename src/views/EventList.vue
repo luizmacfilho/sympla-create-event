@@ -41,12 +41,8 @@
               <td class="event-list__events__table__value-amount">
                 <div class="value-amount">
                   <span>0</span>
-                  <div class="value-amount__sold">
-
-                  </div>
-                  <div class="value-amount__original">
-
-                  </div>
+                  <div class="value-amount__sold"></div>
+                  <div class="value-amount__original"></div>
                   <span>{{event.ticketAmount}}</span>
                 </div>
               </td>
@@ -60,7 +56,7 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
-import { instance } from '@/app/Application';
+import instance from '@/app/Application';
 import PageBar from '@/components/PageBar.vue';
 import CardEvent from '@/components/CardEvent.vue';
 import EventStorageInstance from '@/storage/EventStorage';
@@ -68,7 +64,7 @@ import EventStorageInstance from '@/storage/EventStorage';
 @Component({
   components: {
     PageBar, CardEvent,
-  }
+  },
 })
 export default class EventList extends Vue {
 

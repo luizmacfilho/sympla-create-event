@@ -1,12 +1,6 @@
 <template>
   <v-app class="app">
-    <v-app-bar
-      app
-      flat
-      color="white"
-      class="app__bar"
-      height="68"
-    >
+    <v-app-bar app flat color="white" class="app__bar" height="68">
       <component :is="app.headerButtonName"></component>
       <img class="app__bar__logo" src="./assets/logo.svg"/>
       <UserInfo class="app__bar__user" />
@@ -27,15 +21,14 @@
 <script lang="ts">
 import Vue from 'vue';
 import { Component } from 'vue-property-decorator';
-import EventsBtn from '@/components/EventsBtn.vue';
 import UserInfo from '@/components/UserInfo.vue';
 import PublishEventBtn from '@/components/PublishEventBtn.vue';
-import { instance, Application } from '@/app/Application';
+import instance, { Application } from '@/app/Application';
 import EventStorage from '@/storage/EventStorage';
 
 @Component({
   components: {
-    EventsBtn, UserInfo, PublishEventBtn,
+    UserInfo, PublishEventBtn,
   },
 })
 export default class App extends Vue {
