@@ -1,34 +1,24 @@
 # sympla-test
 
-## Project setup
+O teste foi realizado utilizando Vue.js com Vuetify e os dados foram armazenados localmente utilizando o `localStorage` para simular uma API. Não foram realizados testes unitários.
+
+## Demo
+
+O teste foi publicado utilizando o Firebase Hosting e é possível acessar [clicando aqui](https://sympla-test-lf.firebaseapp.com).
+
+## Instalação
+
+Para executar o projeto é necessário que tenha Node.js instalado, sendo uma versão > 10. As dependências são instaladas executando o comando abaixo:
 ```
 npm install
 ```
 
-### Compiles and hot-reloads for development
+### Executar em modo de desenvolvimento
 ```
 npm run serve
 ```
 
-### Compiles and minifies for production
+### Build para produção
 ```
 npm run build
 ```
-
-### Run your tests
-```
-npm run test
-```
-
-### Lints and fixes files
-```
-npm run lint
-```
-
-### Run your unit tests
-```
-npm run test:unit
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).

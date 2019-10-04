@@ -41,6 +41,7 @@
                 v-mask="'##/##/####'"
                 prepend-inner-icon="$vuetify.icons.schedule"
                 label="Data de início"
+                type="tel"
                 :rules="rules.startDate"
                 >
               </v-text-field>
@@ -57,6 +58,7 @@
                 v-mask="'##:##'"
                 prepend-inner-icon="$vuetify.icons.clock"
                 label="Hora de início"
+                type="tel"
                 :rules="rules.startTime"
                 >
               </v-text-field>
@@ -73,6 +75,7 @@
                 v-mask="'##/##/####'"
                 prepend-inner-icon="$vuetify.icons.schedule"
                 label="Data de término"
+                type="tel"
                 :rules="rules.endDate"
                 >
               </v-text-field>
@@ -89,6 +92,7 @@
                 v-mask="'##:##'"
                 prepend-inner-icon="$vuetify.icons.clock"
                 label="Hora de término"
+                type="tel"
                 :rules="rules.endTime"
                 >
               </v-text-field>
@@ -139,6 +143,7 @@
                 maxlength="100"
                 placeholder="R$"
                 label="Preço do ingresso"
+                type="tel"
                 :rules="rules.ticketPrice"
                 >
               </v-text-field>
@@ -284,8 +289,9 @@ export default class Event extends Vue {
       if (this.event.ticketFree) {
         this.event.ticketPrice = '';
       }
+      const text = this.event.id ? 'editado' : 'criado';
       EventStorageInstance.save(this.event);
-      instance.toastMessage = `Evento ${this.event.id ? 'editado' : 'criado'} com sucesso`;
+      instance.toastMessage = `Evento ${text} com sucesso`;
       instance.showToast = true;
       this.$router.push('/events');
     }
